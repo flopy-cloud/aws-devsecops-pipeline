@@ -36,7 +36,7 @@ jobs:
         run: docker build -t app:${{ github.sha }} ./app
 
       - name: Escanear imagen con Trivy
-        uses:         uses: aquasecurity/trivy-action@0.35.0
+        uses: uses: aquasecurity/trivy-action@0.35.0
         with:
           image-ref: app:${{ github.sha }}
           severity: HIGH,CRITICAL
