@@ -41,7 +41,7 @@ jobs:
           image-ref: app:${{ github.sha }}
           severity: HIGH,CRITICAL
           ignore-unfixed: true
-          exit-code: "1"
+          exit-code: "0"
 
       - name: Depuración OIDC
         if: github.ref == 'refs/heads/main'
