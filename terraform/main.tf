@@ -50,7 +50,8 @@ resource "aws_iam_openid_connect_provider" "github" {
 resource "aws_iam_role" "github" {
   name = "github-actions-ecr-push"
 
-  # Solo el repo indicado, y solo desde la rama main, puede usar este rol
+  # Solo este repo, y solo desde la rama main, puede usar este rol.
+  # GitHub agrega los IDs numéricos del usuario y del repo al nombre.
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
@@ -60,7 +61,7 @@ resource "aws_iam_role" "github" {
       Condition = {
         StringEquals = {
           "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
-          "token.actions.githubusercontent.com:sub" = "repo:${var.github_user}/${var.github_repo}:ref:refs/heads/main"
+          "token.actions.githubusercontent.com:sub" = "repo:flopy-cloud@253826103/aws-devsecops-pipeline@1430275858:ref:refs/heads/main"
         }
       }
     }]

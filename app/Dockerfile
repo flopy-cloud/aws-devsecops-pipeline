@@ -7,6 +7,10 @@ RUN apt-get update \
     && apt-get upgrade -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
+# La app no instala paquetes: se eliminan las herramientas de instalación
+# y las librerías vulnerables que traen incluidas
+RUN python -m pip uninstall -y pip setuptools wheel
+
 RUN useradd --create-home --uid 10001 appuser
 WORKDIR /home/appuser
 COPY app.py .

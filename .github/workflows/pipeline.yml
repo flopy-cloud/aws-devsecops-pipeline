@@ -41,16 +41,7 @@ jobs:
           image-ref: app:${{ github.sha }}
           severity: HIGH,CRITICAL
           ignore-unfixed: true
-          exit-code: "0"
-
-      - name: Depuración OIDC
-        if: github.ref == 'refs/heads/main'
-        env:
-          ROLE: ${{ secrets.AWS_ROLE_ARN }}
-        run: |
-          echo "Largo del secreto (debería ser 54): ${#ROLE}"
-          TOKEN=$(curl -s -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r .value)
-          echo "$TOKEN" | cut -d. -f2 | tr '_-' '/+' | awk '{ while (length($0) % 4) $0 = $0 "="; print }' | base64 -d | jq '{iss, sub, aud}'
+          exit-code: "1"
 
       - name: Credenciales de AWS (OIDC)
         if: github.ref == 'refs/heads/main'
